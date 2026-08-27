@@ -302,17 +302,31 @@ function enviarQR(id) {
 
   window[callback] = function(r) {
 
-    if (r.ok) {
+if (r.ok) {
 
-      mostrarResultado(
-        "✓ PRESENTE — " +
-        r.nombre +
-        " — " +
-        r.hora,
-        "ok"
-      );
+  if (r.estado === "Retardo") {
 
-    }
+    mostrarResultado(
+      "🟡 RETARDO — " +
+      r.nombre +
+      " — " +
+      r.hora,
+      "warn"
+    );
+
+  } else {
+
+    mostrarResultado(
+      "🟢 PRESENTE — " +
+      r.nombre +
+      " — " +
+      r.hora,
+      "ok"
+    );
+
+  }
+
+}
 
     else if (r.duplicado) {
 
