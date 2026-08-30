@@ -270,7 +270,52 @@ function mostrarVista(vista, boton) {
   }
 
 }
+function cambiarEstado(nuevoEstado) {
 
+  const callback =
+    'respuestaEstado_' + Date.now();
+
+  window[callback] = function(r) {
+
+    if (r.ok) {
+
+      alert(
+        nuevoEstado === 'ABIERTA'
+          ? 'Asistencia iniciada.'
+          : 'Asistencia cerrada.'
+      );
+
+      cargarGrupo();
+
+    } else {
+
+      alert(
+        r.mensaje ||
+        'No se pudo cambiar el estado.'
+      );
+
+    }
+
+    delete window[callback];
+
+  };
+
+  const script =
+    document.createElement('script');
+
+  script.src =
+    WEB_APP_URL +
+    '?action=estado' +
+    '&valor=' +
+    encodeURIComponent(nuevoEstado) +
+    '&callback=' +
+    callback +
+    '&t=' +
+    Date.now();
+
+  document.body.appendChild(script);
+
+}
 
 function mostrarResultado(texto, clase) {
 
